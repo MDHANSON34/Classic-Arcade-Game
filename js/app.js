@@ -1,28 +1,24 @@
-var Enemy = function(x, y, speed) {
+var Speed = function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1));
+};
+
+var Enemy = function(x, y, Sprite) {
+  this.sprite = 'images/enemy-bug.png';
   this.x = x;
   this.y = y;
-  this.width =51;
-  this.height = 50;
-  this.speed = getRandomInt(x, speed);
-  this.sprite = 'images/enemy-bug.png';
+  this.speed = Speed (95, 250);
 };
 
 Enemy.prototype.update = function(dt) {
+if (this.x < 808) {
   this.x += this.speed*dt;
-    if (this.x > 500) {
-    this.x=-30;
+    } else {
+    this.x =0;
   }
 };
 
 Enemy.prototype.render = function() {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-Enemy.prototype.reset = function() {
-  this.row = getRandomInt(1, 3);
-  this.x = -100;
-  this.y = 83 * this.row;
-  this.speed = getRandomInt(2, 6);
 };
 
 var Player = function(x,y,speed) {
@@ -95,6 +91,5 @@ document.addEventListener('keyup', function(e) {
     39: 'right',
     40: 'down'
   };
-
   player.handleInput(allowedKeys[e.keyCode]);
 });
